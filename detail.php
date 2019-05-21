@@ -35,6 +35,7 @@ function changeToPersian($arr){
         <div class="nav-wrapper green darken-4">
             <a href="index.php" class="brand-logo left hide-on-med-and-down">سیستم فایل املاک</a>
             <ul class="right">
+                <li><a href="detail.php?id=<?= $result[0]['id']?>&delete=yes" class="btn btn-small red">حذف</a></li>
                 <li><a href="new.php" class="btn lime darken-1">ایجاد فایل جدید</a></li>
                 <li><a href="edit.php?id=<?= $result[0]['id'] ?>">ویرایش فایل</a></li>
                 <li><a href="index.php">صفحه اصلی</a></li>
