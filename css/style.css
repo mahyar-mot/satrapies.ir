@@ -1,0 +1,62 @@
+@font-face {
+    font-family: "yekan";
+    src: url(../fonts/yekan.woff);
+    src: url(../fonts/yekan.eot?#iefix) format("embedded-opentype"), url(../fonts/yekan.woff) format("woff"), url(../fonts/yekan.ttf) format("truetype"), url(../fonts/yekan.svg#yekan) format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: yekan;
+    font-size: 16px; !important
+}
+nav .brand-logo{
+    font-size: 1.8em;
+}
+#wrapper{
+    padding-right: 300px;
+}
+@media only screen and (max-width : 992px) {
+   #wrapper{
+        padding-right: 0;
+       padding-top: 55px;
+    }
+    nav.fixed{
+        position: fixed;
+        z-index: 10;
+        top: 0;
+    }
+    #slide-out{
+        margin-top: 52px;
+    }
+}
+.col .card{
+    margin: 1em;
+}
+form{
+    direction: rtl;
+    text-align-all: right;
+    padding: .5em 1.5em;
+    margin-bottom: 4em;
+}
+
+.input-field label {
+    color: #1b5e20;
+    right: 0;
+}
+
+input:not([type]):focus:not([readonly]), input[type="text"]:not(.browser-default):focus:not([readonly]), input[type="password"]:not(.browser-default):focus:not([readonly]), input[type="email"]:not(.browser-default):focus:not([readonly]), input[type="url"]:not(.browser-default):focus:not([readonly]), input[type="time"]:not(.browser-default):focus:not([readonly]), input[type="date"]:not(.browser-default):focus:not([readonly]), input[type="datetime"]:not(.browser-default):focus:not([readonly]), input[type="datetime-local"]:not(.browser-default):focus:not([readonly]), input[type="tel"]:not(.browser-default):focus:not([readonly]), input[type="number"]:not(.browser-default):focus:not([readonly]), input[type="search"]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #1b5e20;
+    -webkit-box-shadow: 0 1px 0 0 #1b5e20;
+    box-shadow: 0 1px 0 0 #1b5e20;
+}
+.marginr1{
+    margin-right: 1em;
+}
+.detail{
+    margin-bottom: 5em;
+}
