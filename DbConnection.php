@@ -8,6 +8,7 @@ class DbConnection
     private $username = 'admin';
     private $password = 'admin1234';
     private $conn = '';
+
     public function __construct()
     {
         try{
@@ -18,10 +19,12 @@ class DbConnection
             die ("Connection Failed: ". $e->getMessage());
         }
     }
+
     public function closeConnection()
     {
         $this->conn = null;
     }
+
     private function setRecords($query,$var)
     {
         try{
@@ -32,14 +35,17 @@ class DbConnection
             return "Error : ". $e->getMessage();
         }
     }
+
     public function getRecord($query,$var=[])
     {
         $stmt = $this->setRecords($query,$var);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
     public function insertRecord($query, $var=[])
     {
-        return $this->setRecords($query,$var);
+        $this->setRecords($query,$var);
+        return $this->conn->lastInsertId();
     }
 }

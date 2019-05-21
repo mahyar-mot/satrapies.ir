@@ -33,13 +33,10 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
          $record = new DbConnection();
          $row = $record->insertRecord("INSERT INTO houses (owner ,tel ,mobile , zone, house, lot, creation_year, meter, unit, options, description, price, monthly_fee, address)
                             VALUES (:owner, :tel, :mobile, :zone, :house, :lot, :creation_year, :meter, :unit, :options, :description, :price, :monthly_fee, :address)", $result);
-         echo $row;
-         if ($row){
-             echo 'success';
-         }else{
-             echo 'fail';
-         }
          $record->closeConnection();
+         if (is_string($row)){
+             header("Location:detail.php?id=$row");
+         }
      }
 
  }
