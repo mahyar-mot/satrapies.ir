@@ -60,3 +60,6 @@ input:not([type]):focus:not([readonly]), input[type="text"]:not(.browser-default
 .detail{
     margin-bottom: 5em;
 }
+.hidden{
+    visibility: hidden;
+}

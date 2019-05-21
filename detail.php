@@ -4,7 +4,7 @@
         $record = new DbConnection();
         $result = $record->getRecord("SELECT * FROM houses WHERE id=?",[$_GET['id']]);
         if(empty($result)){
-            echo 'empty';
+            header('Location:index.php');
         }
     }else{
         header('Location:index.php');
@@ -36,7 +36,7 @@ function changeToPersian($arr){
             <a href="index.php" class="brand-logo left hide-on-med-and-down">سیستم فایل املاک</a>
             <ul class="right">
                 <li><a href="new.php" class="btn lime darken-1">ایجاد فایل جدید</a></li>
-                <li><a href="edit.php">ویرایش فایل</a></li>
+                <li><a href="edit.php?id=<?= $result[0]['id'] ?>">ویرایش فایل</a></li>
                 <li><a href="index.php">صفحه اصلی</a></li>
             </ul>
         </div>

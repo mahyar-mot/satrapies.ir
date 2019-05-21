@@ -3,6 +3,7 @@
     $record = new DbConnection();
     $result = $record ->getRecord('SELECT * FROM houses ORDER BY created_at DESC');
     $record ->closeConnection();
+
     function changeToPersian($arr){
         $eng = ['luxury','renovate','parking','storage','elevator','aircon','toilet'];
         $per = ['لوکس','بازسازی‌شده','پارکینگ','انباری','آسانسور','کولرگازی','توالت فرنگی'];
