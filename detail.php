@@ -1,6 +1,10 @@
 <?php
-
-
+    require 'DbConnection.php';
+    $record = new DbConnection();
+    $result = $record->showRecord('SELECT * FROM houses WHERE id=1');
+    echo '<pre>';
+    print_r($result[0]);
+    echo '</pre>';
 
 ?>
 <!DOCTYPE html>
