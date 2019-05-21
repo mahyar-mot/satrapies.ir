@@ -3,7 +3,11 @@
     $record = new DbConnection();
     $result = $record ->getRecord('SELECT * FROM houses ORDER BY created_at DESC');
     $record ->closeConnection();
-
+    function changeToPersian($arr){
+        $eng = ['luxury','renovate','parking','storage','elevator','aircon','toilet'];
+        $per = ['لوکس','بازسازی‌شده','پارکینگ','انباری','آسانسور','کولرگازی','توالت فرنگی'];
+        return str_replace($eng,$per,$arr);
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -42,12 +46,15 @@
                     <img class="activator" src="images/default.png" alt="">
                 </div>
                 <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                    <p><a href="#">This is a link</a></p>
+
+                    <span class="card-title activator grey-text text-darken-4"><?= ($item['house']=='rent') ? 'اجاره/رهن' : 'فروش'; ?><i class="material-icons right">more_vert</i></span>
+                    <p> &nbsp; <?= ($item['lot']=='apartment') ? 'آپارتمان':(($item['lot']=='condo')? 'خانه':'کلنگی/زمین'); ?> &nbsp; <span class="chip">محدوده/منطقه: <?= $item['zone'] ?></span></p>
                 </div>
                 <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                    <span class="card-title grey-text text-darken-4">مشخصات<i class="material-icons right">close</i></span>
+                    <p><?= $item['price'] ?>:قیمت/ودیعه</p>
+                    <p><?= $item['monthly_fee'] ?>:اجاره ماهیانه</p>
+                    <p> امکانات : <?= changeToPersian($item['options']) ?></p>
                 </div>
                 <div class="card-action">
                     <a href="detail.php?id=<?= $item['id']?>" class="btn lime darken-1">مشاهده فایل</a>
