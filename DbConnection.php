@@ -32,7 +32,7 @@ class DbConnection
             return "Error : ". $e->getMessage();
         }
     }
-    public function showRecord($query)
+    public function getRecord($query)
     {
         $stmt = $this->getRecords($query);
 
