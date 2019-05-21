@@ -1,10 +1,18 @@
 <?php
-    require 'DbConnection.php';
-    $record = new DbConnection();
-    $result = $record->showRecord('SELECT * FROM houses WHERE id=1');
-    echo '<pre>';
-    print_r($result[0]);
-    echo '</pre>';
+    if (array_key_exists('id',$_GET)){
+        require 'DbConnection.php';
+        $record = new DbConnection();
+        $result = $record->showRecord("SELECT * FROM houses WHERE id={$_GET['id']}");
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+        if(empty($result)){
+            echo 'empty';
+        }
+    }else{
+        header('Location:index.php');
+    }
+
 
 ?>
 <!DOCTYPE html>

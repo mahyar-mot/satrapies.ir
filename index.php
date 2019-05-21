@@ -1,5 +1,8 @@
 <?php
-
+    require 'DbConnection.php';
+    $record = new DbConnection();
+    $result = $record ->showRecord('SELECT * FROM houses');
+    $record ->closeConnection();
 
 
 ?>
@@ -33,6 +36,7 @@
         <li><a href="#">Second Sidebar Link</a></li>
     </ul>
     <div class="row">
+        <?php foreach ($result as $key => $item): ?>
         <div class="col s12 m6 l4">
             <div class="card sticky-action hoverable">
                 <div class="card-image waves-effect waves-block waves-light">
@@ -47,10 +51,11 @@
                     <p>Here is some more information about this product that is only revealed once clicked on.</p>
                 </div>
                 <div class="card-action">
-                    <a href="#" class="btn lime darken-1">مشاهده فایل</a>
+                    <a href="detail.php?id=<?= $item['id']?>" class="btn lime darken-1">مشاهده فایل</a>
                 </div>
             </div>
         </div>
+        <?php endforeach; ?>
     </div>
 </div>
 
