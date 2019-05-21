@@ -22,20 +22,24 @@ class DbConnection
     {
         $this->conn = null;
     }
-    private function getRecords($query)
+    private function setRecords($query,$var)
     {
         try{
             $stmt = $this->conn->prepare($query);
-            $stmt->execute();
+            $stmt->execute($var);
             return $stmt;
         }catch (PDOException $e){
             return "Error : ". $e->getMessage();
         }
     }
-    public function getRecord($query)
+    public function getRecord($query,$var=[])
     {
-        $stmt = $this->getRecords($query);
+        $stmt = $this->setRecords($query,$var);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function insertRecord($query, $var=[])
+    {
+        return $this->setRecords($query,$var);
     }
 }

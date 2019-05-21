@@ -2,7 +2,7 @@
     if (array_key_exists('id',$_GET)){
         require 'DbConnection.php';
         $record = new DbConnection();
-        $result = $record->getRecord("SELECT * FROM houses WHERE id={$_GET['id']}");
+        $result = $record->getRecord("SELECT * FROM houses WHERE id=?",[$_GET['id']]);
         if(empty($result)){
             echo 'empty';
         }

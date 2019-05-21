@@ -27,7 +27,19 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
      }
 
      if (!($error || $missing)){
-         echo 'success!';
+         $result = ['owner'=>$name, 'tel'=>$tel, 'mobile'=>$mobile, 'zone'=>$zone, 'house'=>$house, 'lot'=>$lot, 'creation_year'=>$creation_year,
+             'meter'=>$meter, 'unit'=>$unit, 'options'=>implode(',',$options), 'description'=>$description, 'price'=>$price, 'monthly_fee'=>$monthly_fee, 'address'=>$address];
+         require 'DbConnection.php';
+         $record = new DbConnection();
+         $row = $record->insertRecord("INSERT INTO houses (owner ,tel ,mobile , zone, house, lot, creation_year, meter, unit, options, description, price, monthly_fee, address)
+                            VALUES (:owner, :tel, :mobile, :zone, :house, :lot, :creation_year, :meter, :unit, :options, :description, :price, :monthly_fee, :address)", $result);
+         echo $row;
+         if ($row){
+             echo 'success';
+         }else{
+             echo 'fail';
+         }
+         $record->closeConnection();
      }
 
  }
