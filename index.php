@@ -1,12 +1,35 @@
 <?php
     require 'DbConnection.php';
     $record = new DbConnection();
-    $result = $record ->getRecord('SELECT * FROM houses ORDER BY created_at DESC');
 
     function changeToPersian($arr){
         $eng = ['luxury','renovate','parking','storage','elevator','aircon','toilet'];
         $per = ['لوکس','بازسازی‌شده','پارکینگ','انباری','آسانسور','کولرگازی','توالت فرنگی'];
         return str_replace($eng,$per,$arr);
+    }
+    function changeToEnglish($arr){
+        $eng = ['luxury','renovate','parking','storage','elevator','aircon','toilet'];
+        $per = ['لوکس','بازسازی‌شده','پارکینگ','انباری','آسانسور','کولرگازی','توالت فرنگی'];
+        return str_replace($per,$eng,$arr);
+    }
+    if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['search'])){
+        $house = $lot = $price =  $options = null;
+        foreach ($_POST as $key => $value){
+            checkInput($value);
+            if ($value !== ''){
+                $$key = $value;
+            }
+        }
+        $options =  (is_null($options)) ? null : '%'.changeToEnglish($options).'%';
+        $result = $record ->getRecord('SELECT * FROM houses WHERE (house=:house OR :house IS NULL)AND(lot=:lot OR :lot IS NULL)AND(price=:price OR :price IS NULL)AND(options LIKE :options OR :options IS NULL )', ['house'=>$house, 'lot'=>$lot, 'price'=>$price, 'options'=>$options]);
+    }else{
+        $result = $record ->getRecord('SELECT * FROM houses ORDER BY created_at DESC');
+    }
+    function checkInput($input){
+        $input = trim($input);
+        $input = stripslashes($input);
+        $input = htmlspecialchars($input);
+        return $input;
     }
 ?>
 <!DOCTYPE html>
@@ -43,8 +66,13 @@
                 </div>
             </div>
         </li>
-            <li class="px"><input name="house" id="house" class="input-field" type="text" placeholder="نوع"></li>
-            <li class="px"><a href="#">Second Sidebar Link</a></li>
+        <br>
+        <li class="px"><h6>جست و جو</h6></li>
+        <li class="px"><label for="sell"><input name="house" id="sell" class="input-field" value="sell" type="radio"><span>فروش</span></label><label for="rent"><input name="house" id="rent" class="input-field" value="rent" type="radio"><span>رهن/اجاره</span></label></li>
+        <li class="px"><label><input type="radio" class="input-field" value="apartment" name="lot"><span>آپارتمان</span></label><label><input type="radio" class="input-field" value="condo" name="lot"><span>خانه</span></label><label><input type="radio" class="input-field" value="old_house" name="lot"><span>کلنگی/زمین</span></label> </li>
+        <li class="px"><input type="text" class="input-filed" name="price" placeholder="قیمت/ودیعه"></li>
+        <li class="px"><input type="text" class="input-filed" name="options" placeholder="امکانات"></li>
+        <li class="px"><input type="submit" class="btn green" name="search" value="بگرد"></li>
     </ul>
     </form>
     <div class="row">
