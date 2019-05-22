@@ -20,11 +20,6 @@ class DbConnection
         }
     }
 
-    public function closeConnection()
-    {
-        $this->conn = null;
-    }
-
     private function setRecords($query,$var)
     {
         try{
@@ -48,4 +43,10 @@ class DbConnection
         $this->setRecords($query,$var);
         return $this->conn->lastInsertId();
     }
+
+    public function __destruct()
+    {
+        $this->conn = null;
+    }
+
 }

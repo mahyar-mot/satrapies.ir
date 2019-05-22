@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
         $record = new DbConnection();
         $row = $record->insertRecord("UPDATE houses SET owner=:owner ,tel=:tel ,mobile=:mobile , zone=:zone ,house=:house, lot=:lot, creation_year=:creation_year,
             meter=:meter, unit=:unit, options=:options, description=:description, price=:price, monthly_fee=:monthly_fee, address=:address WHERE id=:id", $result);
-        $record->closeConnection();
+
         if (is_string($row)){
             header("Location:detail.php?id=$id");
         }
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
         }
         ?>
         <form class="col s12" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
-            <input type="text" name="id" class="hide" value="<?= $_GET['id'] ?>">
+            <input type="hidden" name="id" class="hide" value="<?= $_GET['id'] ?>">
             <div class="input-field col s12">
                 <input id="name" type="text"  name="name" class="validate" value="<?php if ($error || $missing) echo htmlentities($name);?>">
                 <label for="name">نام مالک</label>

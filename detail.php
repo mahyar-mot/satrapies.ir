@@ -6,7 +6,12 @@
         if(empty($result)){
             header('Location:index.php');
         }
-    }else{
+    }elseif($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['delete'])){
+        require 'DbConnection.php';
+        $rec = new DbConnection();
+        $res = $rec->insertRecord("DELETE FROM houses WHERE id=?",[$_POST['id_to_delete']]);
+        header('Location:index.php');
+    } else{
         header('Location:index.php');
     }
 function changeToPersian($arr){
@@ -35,7 +40,12 @@ function changeToPersian($arr){
         <div class="nav-wrapper green darken-4">
             <a href="index.php" class="brand-logo left hide-on-med-and-down">سیستم فایل املاک</a>
             <ul class="right">
-                <li><a href="detail.php?id=<?= $result[0]['id']?>&delete=yes" class="btn btn-small red">حذف</a></li>
+                <li>
+                    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
+                        <input type="hidden" class="hide" value="<?= $result[0]['id']?>" name="id_to_delete">
+                        <input type="submit" name="delete" value="حذف" class="btn btn-small red">
+                    </form>
+                </li>
                 <li><a href="new.php" class="btn lime darken-1">ایجاد فایل جدید</a></li>
                 <li><a href="edit.php?id=<?= $result[0]['id'] ?>">ویرایش فایل</a></li>
                 <li><a href="index.php">صفحه اصلی</a></li>
