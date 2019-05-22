@@ -37,13 +37,36 @@ nav .brand-logo{
 .col .card{
     margin: 1em;
 }
-form{
+#formedit{
     direction: rtl;
     text-align-all: right;
     padding: .5em 1.5em;
     margin-bottom: 4em;
 }
 
+#formmenu{
+    direction: rtl;
+    padding: 0 1em;
+    text-align-all: right;
+    width: 90%;
+}
+
+#formmenu>ul li input::-webkit-input-placeholder{
+    color: black;
+}
+#formmenu>ul li input::-moz-placeholder{
+    color: black;
+}
+#formmenu>ul li input::-ms-input-placeholder{
+    color: black;
+}
+#formmenu>ul li input:-moz-placeholder{
+    color: black;
+}
+
+.px{
+    padding: 0 1em;
+}
 .input-field label {
     color: #1b5e20;
     right: 0;
@@ -60,6 +83,6 @@ input:not([type]):focus:not([readonly]), input[type="text"]:not(.browser-default
 .detail{
     margin-bottom: 5em;
 }
-.hidden{
-    visibility: hidden;
+#logo{
+    min-height: 300px; !important;
 }

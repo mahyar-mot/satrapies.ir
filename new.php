@@ -76,7 +76,7 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
                     echo '<script> M.toast({html:"خطا در ثبت لطفا دوباره سعی کنید"})</script>';
                 }
             ?>
-         <form class="col s12" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
+         <form id="formedit" class="col s12" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
              <div class="input-field col s12">
                  <input id="name" type="text"  name="name" class="validate" value="<?php if ($error || $missing) echo htmlentities($name);?>">
                  <label for="name">نام مالک</label>

@@ -34,16 +34,25 @@
             <a href="#" data-target="slide-out" class="sidenav-trigger show-on-medium-and-down right"><i class="material-icons">menu</i></a>
         </div>
     </nav>
+    <form id="formmenu" class="no-padding" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
     <ul id="slide-out" class="sidenav sidenav-fixed green lighten-4">
-        <li><a href="#">First Sidebar Link</a></li>
-        <li><a href="#">Second Sidebar Link</a></li>
+        <li>
+            <div id="logo" class="user-view">
+                <div  class="background">
+                    <img src="images/logo.png">
+                </div>
+            </div>
+        </li>
+            <li class="px"><input name="house" id="house" class="input-field" type="text" placeholder="نوع"></li>
+            <li class="px"><a href="#">Second Sidebar Link</a></li>
     </ul>
+    </form>
     <div class="row">
         <?php foreach ($result as $key => $item): ?>
         <div class="col s12 m6 l4">
             <div class="card sticky-action hoverable">
                 <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator" src="images/default.png" alt="">
+                    <img class="activator" src="images/preview.png" alt="">
                 </div>
                 <div class="card-content">
 
@@ -51,10 +60,13 @@
                     <p> &nbsp; <?= ($item['lot']=='apartment') ? 'آپارتمان':(($item['lot']=='condo')? 'خانه':'کلنگی/زمین'); ?> &nbsp; <span class="chip">محدوده/منطقه: <?= $item['zone'] ?></span></p>
                 </div>
                 <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">مشخصات<i class="material-icons right">close</i></span>
-                    <p><?= $item['price'] ?>:قیمت/ودیعه</p>
-                    <p><?= $item['monthly_fee'] ?>:اجاره ماهیانه</p>
-                    <p> امکانات : <?= changeToPersian($item['options']) ?></p>
+                    <span class="card-title grey-text text-darken-4 right-align">مشخصات<i class="material-icons right">close</i></span>
+                    <br>
+                    <p class="right-align"><span class="left"><?= $item['price'] ?></span>:قیمت/ودیعه</p>
+                    <br>
+                    <p class="right-align"><span class="left"><?= $item['monthly_fee'] ?> </span>:اجاره ماهیانه</p>
+                    <br>
+                    <p class="right-align"> : امکانات <br><br> <?= changeToPersian($item['options']) ?></p>
                 </div>
                 <div class="card-action">
                     <a href="detail.php?id=<?= $item['id']?>" class="btn lime darken-1">مشاهده فایل</a>
