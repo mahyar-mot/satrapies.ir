@@ -3,6 +3,7 @@
         require 'DbConnection.php';
         $record = new DbConnection();
         $result = $record->getRecord("SELECT * FROM houses WHERE id=?",[$_GET['id']]);
+        $pics = $record->getRecord("SELECT url FROM pics WHERE house_id=?", [$_GET['id']]);
         if(empty($result)){
             header('Location:index.php');
         }
@@ -19,7 +20,6 @@ function changeToPersian($arr){
         $per = ['لوکس','بازسازی‌شده','پارکینگ','انباری','آسانسور','کولرگازی','توالت فرنگی'];
         return str_replace($eng,$per,$arr);
 }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -55,10 +55,12 @@ function changeToPersian($arr){
     <div class="container">
         <h3 class="right">تصاویر</h3>
         <div class="carousel carousel-slider">
+          <?php foreach ($pics as $key => $value): ?>
+            <a class="carousel-item" href="#one!"><img src="<?= $value['url'] ?>"></a>
+          <?php endforeach; ?>
+          <?php if (empty($pics)): ?>
             <a class="carousel-item" href="#one!"><img src="images/414289-PFPYAR-176.jpg"></a>
-            <a class="carousel-item" href="#two!"><img src="images/414289-PFPYAR-176.jpg"></a>
-            <a class="carousel-item" href="#three!"><img src="images/414289-PFPYAR-176.jpg"></a>
-            <a class="carousel-item" href="#four!"><img src="images/414289-PFPYAR-176.jpg"></a>
+          <?php endif; ?>
         </div>
         <br>
         <br>

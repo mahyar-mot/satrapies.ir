@@ -35,6 +35,10 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
                             VALUES (:owner, :tel, :mobile, :zone, :house, :lot, :creation_year, :meter, :unit, :options, :description, :price, :monthly_fee, :address)", $result);
 
          if (is_string($row)){
+             require 'upload.php';
+             foreach ($addressList as $url){
+                 $record->insertRecord("INSERT INTO pics (url ,house_id) VALUES (?,?)", [$url, $row]);
+             }
              header("Location:detail.php?id=$row");
          }
      }
@@ -76,7 +80,7 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
                     echo '<script> M.toast({html:"خطا در ثبت لطفا دوباره سعی کنید"})</script>';
                 }
             ?>
-         <form id="formedit" class="col s12" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
+         <form id="formedit" class="col s12" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" enctype="multipart/form-data">
              <div class="input-field col s12">
                  <input id="name" type="text"  name="name" class="validate" value="<?php if ($error || $missing) echo htmlentities($name);?>">
                  <label for="name">نام مالک</label>
@@ -206,19 +210,39 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
              <div class="file-field input-field">
                  <div class="btn lime darken-1">
                      <span>عکس</span>
-                     <input type="file">
+                     <input type="file" name="image">
                  </div>
                  <div class="file-path-wrapper">
-                     <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                     <input class="file-path validate" type="text" placeholder="Upload a Picture">
                  </div>
              </div>
              <br>
-             <div class="input-field col s12">
+             <div class="input-field">
+                <button id="nextpic" class="btn-small green">عکس بعدی</button>
+             </div>
+             <div id="submit" class="input-field col s12">
                  <input type="submit" name="submit" value="ثبت" class="btn btn-large green">
              </div>
          </form>
      </div>
 </div>
-
+<script>
+    var ele = document.querySelector('#nextpic');
+    var subbmit = document.querySelector('#submit');
+    ele.addEventListener('click',function (e) {
+        e.preventDefault();
+        var i = document.querySelectorAll('.file-field').length;
+        var node = "             <div class=\"file-field input-field\">\n" +
+        "                 <div class=\"btn lime darken-1\">\n" +
+        "                     <span>عکس</span>\n" +
+        "                     <input type=\"file\" name=\"image"+i+"\">\n" +
+        "                 </div>\n" +
+        "                 <div class=\"file-path-wrapper\">\n" +
+        "                     <input class=\"file-path validate\" type=\"text\" placeholder=\"Upload a Picture\">\n" +
+        "                 </div>\n" +
+        "             </div>";
+        submit.insertAdjacentHTML('beforebegin',node);
+    })
+</script>
 </body>
 </html>
