@@ -29,21 +29,31 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
     if (!($error || $missing)){
         $result = ['owner'=>$name, 'tel'=>$tel, 'mobile'=>$mobile, 'zone'=>$zone, 'house'=>$house, 'lot'=>$lot, 'creation_year'=>$creation_year,
             'meter'=>$meter, 'unit'=>$unit, 'options'=>implode(',',$options), 'description'=>$description, 'price'=>$price, 'monthly_fee'=>$monthly_fee, 'address'=>$address, 'id'=>$id];
-        print_r($result);
         require 'DbConnection.php';
         $record = new DbConnection();
         $row = $record->insertRecord("UPDATE houses SET owner=:owner ,tel=:tel ,mobile=:mobile , zone=:zone ,house=:house, lot=:lot, creation_year=:creation_year,
             meter=:meter, unit=:unit, options=:options, description=:description, price=:price, monthly_fee=:monthly_fee, address=:address WHERE id=:id", $result);
 
-        if (is_string($row)){
+        if (array_key_exists('deletepic', $_POST)){
+            foreach ($_POST['deletepic'] as $k => $v){
+                $record ->insertRecord("DELETE FROM pics WHERE id=? AND house_id=?", [$v, $id]);
+            }
+        }
+        if ($_FILES['image']['name'] != ''){
+            require 'upload.php';
+            foreach ($addressList as $url){
+                $record->insertRecord("INSERT INTO pics (url ,house_id) VALUES (?,?)", [$url, $id]);
+            }
             header("Location:detail.php?id=$id");
         }
+        header("Location:detail.php?id=$id");
     }
 }elseif (array_key_exists('id',$_GET)){
     $error['name'] = null;
     require 'DbConnection.php';
     $rec = new DbConnection();
     $ro = $rec->getRecord("SELECT * FROM houses where id=?",[$_GET['id']]);
+    $pics = $rec->getRecord("SELECT * FROM pics where house_id=?",[$_GET['id']]);
     if (empty($ro)){
         header('Location:index.php');
     }
@@ -94,13 +104,13 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
         </div>
     </nav>
     <div class="container">
-        <h4 class="center-align">تغییر مشخصات ملک مورد نظر:</h4>
+        <h4 class="center-align">:تغییر مشخصات ملک مورد نظر</h4>
         <?php
         if ($missing || $error){
             echo '<script> M.toast({html:"خطا در ثبت لطفا دوباره سعی کنید"})</script>';
         }
         ?>
-        <form id="formedit" class="col s12" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
+        <form id="formedit" class="col s12" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" enctype="multipart/form-data">
             <input type="hidden" name="id" class="hide" value="<?= $_GET['id'] ?>">
             <div class="input-field col s12">
                 <input id="name" type="text"  name="name" class="validate" value="<?php if ($error || $missing) echo htmlentities($name);?>">
@@ -228,22 +238,53 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
                 <span class="helper-text right" data-error="نادرست" data-success="درست"><?php if ($missing && in_array('address', $missing)) echo $empty ?></span>
             </div>
             <br>
+            <div id="deletepics" class="col s12">
+                <?php if (!empty($pics)) : ?>
+                <h6>حذف تصاویر:</h6>
+                    <?php foreach ($pics as $key=>$value):?>
+                        <input type="checkbox" class="browser-default" id="<?= 'id_'.$value['id']?>" name="deletepic[]" value="<?= $value['id']?>" >
+                        <label class="browser-default" for="<?= 'id_'.$value['id']?>"> <img src="<?= $value['url'] ?>" width="250"></label>
+                    <?php endforeach;?>
+                <?php endif; ?>
+            </div>
             <div class="file-field input-field">
                 <div class="btn cyan darken-1">
                     <span>عکس</span>
-                    <input type="file">
+                    <input type="file" name="image">
                 </div>
                 <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                    <input class="file-path validate" type="text" placeholder="Upload a Picture">
                 </div>
             </div>
             <br>
-            <div class="input-field col s12">
+            <div class="input-field">
+                <button id="nextpic" class="btn-small cyan">عکس بعدی</button>
+            </div>
+            <br>
+            <div id="submit" class="input-field col s12">
                 <input type="submit" name="submit" value="ثبت" class="btn btn-large green">
             </div>
         </form>
     </div>
 </div>
-
+<script>
+    var ele = document.querySelector('#nextpic');
+    var subbmit = document.querySelector('#submit');
+    ele.addEventListener('click',function (e) {
+        e.preventDefault();
+        var i = document.querySelectorAll('.file-field').length;
+        var node = "             <div class=\"file-field input-field\">\n" +
+            "                 <div class=\"btn cyan darken-1\">\n" +
+            "                     <span>عکس</span>\n" +
+            "                     <input type=\"file\" name=\"image"+i+"\">\n" +
+            "                 </div>\n" +
+            "                 <div class=\"file-path-wrapper\">\n" +
+            "                     <input class=\"file-path validate\" type=\"text\" placeholder=\"Upload a Picture\">\n" +
+            "                 </div>\n" +
+            "             </div>\n"+
+            "<br>";
+        submit.insertAdjacentHTML('beforebegin',node);
+    })
+</script>
 </body>
 </html>

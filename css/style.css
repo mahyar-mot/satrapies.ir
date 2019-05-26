@@ -86,3 +86,7 @@ input:not([type]):focus:not([readonly]), input[type="text"]:not(.browser-default
 #logo{
     min-height: 300px; !important;
 }
+
+#deletepics input[type="checkbox"]:checked+label>img{
+    background: #818181;
+}

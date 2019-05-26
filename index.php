@@ -24,6 +24,7 @@
         $result = $record ->getRecord('SELECT * FROM houses WHERE (house=:house OR :house IS NULL)AND(lot=:lot OR :lot IS NULL)AND(price=:price OR :price IS NULL)AND(options LIKE :options OR :options IS NULL )', ['house'=>$house, 'lot'=>$lot, 'price'=>$price, 'options'=>$options]);
     }else{
         $result = $record ->getRecord('SELECT * FROM houses ORDER BY created_at DESC');
+        $pic = $record->getRecord("SELECT url, house_id FROM pics GROUP BY house_id");
     }
     function checkInput($input){
         $input = trim($input);
@@ -77,30 +78,32 @@
     </form>
     <div class="row">
         <?php foreach ($result as $key => $item): ?>
-        <div class="col s12 m6 l4">
-            <div class="card sticky-action hoverable">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator" src="images/preview.png" alt="">
-                </div>
-                <div class="card-content">
+            <?php foreach ($pic as $k => $picitem): ?>
+                <div class="col s12 m6 l4">
+                    <div class="card sticky-action hoverable">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator" src="<?= (in_array($item['id'], $picitem)) ? $picitem['url'] : 'images/preview.png' ?>" alt="">
+                        </div>
+                        <div class="card-content">
 
-                    <span class="card-title activator grey-text text-darken-4"><?= ($item['house']=='rent') ? 'اجاره/رهن' : 'فروش'; ?><i class="material-icons right">more_vert</i></span>
-                    <p> &nbsp; <?= ($item['lot']=='apartment') ? 'آپارتمان':(($item['lot']=='condo')? 'خانه':'کلنگی/زمین'); ?> &nbsp; <span class="chip">محدوده/منطقه: <?= $item['zone'] ?></span></p>
+                            <span class="card-title activator grey-text text-darken-4"><?= ($item['house']=='rent') ? 'اجاره/رهن' : 'فروش'; ?><i class="material-icons right">more_vert</i></span>
+                            <p> &nbsp; <?= ($item['lot']=='apartment') ? 'آپارتمان':(($item['lot']=='condo')? 'خانه':'کلنگی/زمین'); ?> &nbsp; <span class="chip">محدوده/منطقه: <?= $item['zone'] ?></span></p>
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4 right-align">مشخصات<i class="material-icons right">close</i></span>
+                            <br>
+                            <p class="right-align"><span class="left"><?= $item['price'] ?></span>:قیمت/ودیعه</p>
+                            <br>
+                            <p class="right-align"><span class="left"><?= $item['monthly_fee'] ?> </span>:اجاره ماهیانه</p>
+                            <br>
+                            <p class="right-align"> : امکانات <br><br> <?= changeToPersian($item['options']) ?></p>
+                        </div>
+                        <div class="card-action">
+                            <a href="detail.php?id=<?= $item['id']?>" class="btn cyan darken-1">مشاهده فایل</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4 right-align">مشخصات<i class="material-icons right">close</i></span>
-                    <br>
-                    <p class="right-align"><span class="left"><?= $item['price'] ?></span>:قیمت/ودیعه</p>
-                    <br>
-                    <p class="right-align"><span class="left"><?= $item['monthly_fee'] ?> </span>:اجاره ماهیانه</p>
-                    <br>
-                    <p class="right-align"> : امکانات <br><br> <?= changeToPersian($item['options']) ?></p>
-                </div>
-                <div class="card-action">
-                    <a href="detail.php?id=<?= $item['id']?>" class="btn cyan darken-1">مشاهده فایل</a>
-                </div>
-            </div>
-        </div>
+            <?php endforeach; ?>
         <?php endforeach; ?>
     </div>
 </div>
