@@ -34,19 +34,19 @@ function changeToPersian($arr){
     <title>سیستم فایل املاک</title>
 </head>
 
-<body class="green lighten-5">
+<body class="amber lighten-5">
 <div class="detail">
     <nav>
-        <div class="nav-wrapper green darken-4">
+        <div class="nav-wrapper amber darken-4">
             <a href="index.php" class="brand-logo left hide-on-med-and-down">سیستم فایل املاک</a>
             <ul class="right">
                 <li>
                     <form class="no-padding" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
                         <input type="hidden" class="hide" value="<?= $result[0]['id']?>" name="id_to_delete">
-                        <input type="submit" name="delete" value="حذف" class="btn btn-small red">
+                        <input type="submit" name="delete" value="حذف" class="btn btn-small red darken-2">
                     </form>
                 </li>
-                <li><a href="new.php" class="btn lime darken-1">ایجاد فایل جدید</a></li>
+                <li><a href="new.php" class="btn cyan darken-1">ایجاد فایل جدید</a></li>
                 <li><a href="edit.php?id=<?= $result[0]['id'] ?>">ویرایش فایل</a></li>
                 <li><a href="index.php">صفحه اصلی</a></li>
             </ul>

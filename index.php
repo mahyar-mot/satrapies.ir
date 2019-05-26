@@ -45,20 +45,20 @@
     <title>سیستم فایل املاک</title>
 </head>
 
-<body class="green lighten-5">
+<body class="amber lighten-5">
 <div id="wrapper">
     <nav class="fixed">
-        <div class="nav-wrapper green darken-4">
+        <div class="nav-wrapper amber darken-4">
             <a href="index.php" class="brand-logo left">سیستم فایل املاک</a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="new.php" class="btn lime darken-1">ایجاد فایل جدید</a></li>
+                <li><a href="new.php" class="btn cyan darken-1">ایجاد فایل جدید</a></li>
                 <li><a href="index.php">صفحه اصلی</a></li>
             </ul>
             <a href="#" data-target="slide-out" class="sidenav-trigger show-on-medium-and-down right"><i class="material-icons">menu</i></a>
         </div>
     </nav>
     <form id="formmenu" class="no-padding" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
-    <ul id="slide-out" class="sidenav sidenav-fixed green lighten-4">
+    <ul id="slide-out" class="sidenav sidenav-fixed amber lighten-4">
         <li>
             <div id="logo" class="user-view">
                 <div  class="background">
@@ -97,7 +97,7 @@
                     <p class="right-align"> : امکانات <br><br> <?= changeToPersian($item['options']) ?></p>
                 </div>
                 <div class="card-action">
-                    <a href="detail.php?id=<?= $item['id']?>" class="btn lime darken-1">مشاهده فایل</a>
+                    <a href="detail.php?id=<?= $item['id']?>" class="btn cyan darken-1">مشاهده فایل</a>
                 </div>
             </div>
         </div>

@@ -83,10 +83,10 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
     <title>سیستم فایل املاک</title>
 </head>
 
-<body class="green lighten-5">
+<body class="amber lighten-5">
 <div>
     <nav>
-        <div class="nav-wrapper green darken-4">
+        <div class="nav-wrapper amber darken-4">
             <a href="index.php" class="brand-logo left">سیستم فایل املاک</a>
             <ul class="right">
                 <li><a href="index.php">صفحه اصلی</a></li>
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
         </div>
     </nav>
     <div class="container">
-        <h4 class="center-align">لطفا مشخصات ملک را وارد کنید</h4>
+        <h4 class="center-align">تغییر مشخصات ملک مورد نظر:</h4>
         <?php
         if ($missing || $error){
             echo '<script> M.toast({html:"خطا در ثبت لطفا دوباره سعی کنید"})</script>';
@@ -229,7 +229,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
             </div>
             <br>
             <div class="file-field input-field">
-                <div class="btn lime darken-1">
+                <div class="btn cyan darken-1">
                     <span>عکس</span>
                     <input type="file">
                 </div>

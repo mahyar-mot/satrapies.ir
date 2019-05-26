@@ -63,10 +63,10 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
     <title>سیستم فایل املاک</title>
 </head>
 
-<body class="green lighten-5">
+<body class="amber lighten-5">
 <div>
     <nav>
-        <div class="nav-wrapper green darken-4">
+        <div class="nav-wrapper amber darken-4">
             <a href="index.php" class="brand-logo left">سیستم فایل املاک</a>
             <ul class="right">
                 <li><a href="index.php">صفحه اصلی</a></li>
@@ -208,7 +208,7 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
              </div>
              <br>
              <div class="file-field input-field">
-                 <div class="btn lime darken-1">
+                 <div class="btn cyan darken-1">
                      <span>عکس</span>
                      <input type="file" name="image">
                  </div>
@@ -218,7 +218,7 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
              </div>
              <br>
              <div class="input-field">
-                <button id="nextpic" class="btn-small green">عکس بعدی</button>
+                <button id="nextpic" class="btn-small cyan">عکس بعدی</button>
              </div>
              <div id="submit" class="input-field col s12">
                  <input type="submit" name="submit" value="ثبت" class="btn btn-large green">
@@ -233,7 +233,7 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
         e.preventDefault();
         var i = document.querySelectorAll('.file-field').length;
         var node = "             <div class=\"file-field input-field\">\n" +
-        "                 <div class=\"btn lime darken-1\">\n" +
+        "                 <div class=\"btn cyan darken-1\">\n" +
         "                     <span>عکس</span>\n" +
         "                     <input type=\"file\" name=\"image"+i+"\">\n" +
         "                 </div>\n" +
