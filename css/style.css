@@ -89,4 +89,5 @@ input:not([type]):focus:not([readonly]), input[type="text"]:not(.browser-default
 
 #deletepics input[type="checkbox"]:checked+label>img{
     background: #818181;
+    filter: grayscale();
 }

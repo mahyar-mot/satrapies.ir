@@ -34,7 +34,7 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
          $row = $record->insertRecord("INSERT INTO houses (owner ,tel ,mobile , zone, house, lot, creation_year, meter, unit, options, description, price, monthly_fee, address)
                             VALUES (:owner, :tel, :mobile, :zone, :house, :lot, :creation_year, :meter, :unit, :options, :description, :price, :monthly_fee, :address)", $result);
 
-         if (is_string($row) && ($_FILES['image']['name'] != '')){
+         if (is_string($row)){
              require 'upload.php';
              foreach ($addressList as $url){
                  $record->insertRecord("INSERT INTO pics (url ,house_id) VALUES (?,?)", [$url, $row]);
@@ -220,7 +220,6 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
              <div class="input-field">
                 <button id="nextpic" class="btn-small cyan">عکس بعدی</button>
              </div>
-             <br>
              <div id="submit" class="input-field col s12">
                  <input type="submit" name="submit" value="ثبت" class="btn btn-large green">
              </div>
@@ -241,8 +240,7 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
         "                 <div class=\"file-path-wrapper\">\n" +
         "                     <input class=\"file-path validate\" type=\"text\" placeholder=\"Upload a Picture\">\n" +
         "                 </div>\n" +
-        "             </div>\n"+
-        "<br>";
+        "             </div>";
         submit.insertAdjacentHTML('beforebegin',node);
     })
 </script>

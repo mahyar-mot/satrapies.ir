@@ -25,6 +25,7 @@
     }else{
         $result = $record ->getRecord('SELECT * FROM houses ORDER BY created_at DESC');
         $pic = $record->getRecord("SELECT url, house_id FROM pics GROUP BY house_id");
+        $col = array_column($pic, 'house_id');
     }
     function checkInput($input){
         $input = trim($input);
@@ -78,11 +79,22 @@
     </form>
     <div class="row">
         <?php foreach ($result as $key => $item): ?>
-            <?php foreach ($pic as $k => $picitem): ?>
                 <div class="col s12 m6 l4">
                     <div class="card sticky-action hoverable">
                         <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="<?= (in_array($item['id'], $picitem)) ? $picitem['url'] : 'images/preview.png' ?>" alt="">
+                            <!-- <?php foreach ($pic as $k => $picitem): ?> -->
+                                <!-- <?php if (in_array($item['id'], $picitem)): ?> -->
+                                    <!-- <img class="activator" src="<?= $picitem['url'] ?>" alt=""> -->
+                                <!-- <?php endif; ?> -->
+                            <!-- <?php endforeach; ?> -->
+                            <?php
+                                $w = array_search($item['id'], $col);
+                                if (is_int($w)){
+                                    echo "<img class=\"activator\" src=\"{$pic[$w]['url']}\" alt=\"\">";
+                                }else{
+                                    echo '<img class="activator" src="images\preview.png" alt="">';
+                                }
+                                ?>
                         </div>
                         <div class="card-content">
 
@@ -103,7 +115,6 @@
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
         <?php endforeach; ?>
     </div>
 </div>
