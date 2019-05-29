@@ -12,7 +12,7 @@ class DbConnection
     public function __construct()
     {
         try{
-            $this->conn = new PDO("mysql:host=$this->host;port=3306;dbname=$this->dbName", $this->username, $this->password);
+            $this->conn = new PDO("mysql:host=$this->host;dbname=$this->dbName", $this->username, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn->exec("SET CHARACTER SET utf8");
         }catch (PDOException $e){
