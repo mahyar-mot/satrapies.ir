@@ -91,3 +91,12 @@ input:not([type]):focus:not([readonly]), input[type="text"]:not(.browser-default
     background: #818181;
     filter: grayscale();
 }
+.authfield{
+    padding: 1em 2em;
+    direction: rtl;
+}
+@media all and (max-width:1000px) {
+    .margintop{
+        margin-top: 4em;
+    }
+}

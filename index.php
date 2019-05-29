@@ -88,7 +88,7 @@
         <li><br></li>
     </ul>
     </form>
-    <div class="row">
+    <div class="row margintop">
         <?php foreach ($result as $key => $item): ?>
                 <div class="col s12 m6 l4">
                     <div class="card sticky-action hoverable">
