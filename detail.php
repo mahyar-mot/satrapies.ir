@@ -39,7 +39,7 @@ function changeToPersian($arr){
     <nav>
         <div class="nav-wrapper amber darken-4">
             <a href="index.php" class="brand-logo left hide-on-med-and-down">سیستم فایل املاک</a>
-            <ul class="right">
+            <ul class="right hide-on-small-only">
                 <li>
                     <form class="no-padding" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
                         <input type="hidden" class="hide" value="<?= $result[0]['id']?>" name="id_to_delete">
@@ -49,6 +49,17 @@ function changeToPersian($arr){
                 <li><a href="new.php" class="btn cyan darken-1">ایجاد فایل جدید</a></li>
                 <li><a href="edit.php?id=<?= $result[0]['id'] ?>">ویرایش فایل</a></li>
                 <li><a href="index.php">صفحه اصلی</a></li>
+            </ul>
+            <ul class="right hide-on-med-and-up show-on-small no-padding">
+                <li>
+                    <form class="no-padding" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
+                        <input type="hidden" class="hide" value="<?= $result[0]['id']?>" name="id_to_delete">
+                        <input type="submit" name="delete" value="حذف" class="btn btn-small red darken-2 no-padding">
+                    </form>
+                </li>
+                <li><a href="new.php" class="btn btn-small cyan darken-1 no-padding">فایل جدید</a></li>
+                <li><a href="edit.php?id=<?= $result[0]['id'] ?>" class="no-padding marginr1">ویرایش فایل</a></li>
+                <li><a href="index.php" class="no-padding marginr1">صفحه اصلی</a></li>
             </ul>
         </div>
     </nav>
