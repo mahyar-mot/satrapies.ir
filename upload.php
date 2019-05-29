@@ -30,7 +30,6 @@ foreach ($_FILES as $key=>$value) {
     } else {
         chmod('uploads/', 0777);
         if (move_uploaded_file($value["tmp_name"], $target_file)) {
-            echo "The file " . " has been uploaded.";
             array_push($addressList,$target_file);
         } else {
             echo "Sorry, there was an error uploading your file.";

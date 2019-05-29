@@ -56,10 +56,10 @@ function changeToPersian($arr){
         <h3 class="right">تصاویر</h3>
         <div class="carousel carousel-slider">
           <?php foreach ($pics as $key => $value): ?>
-            <a class="carousel-item" href="#one!"><img src="<?= $value['url'] ?>"></a>
+            <a class="carousel-item" href="#"><img src="<?= $value['url'] ?>"></a>
           <?php endforeach; ?>
           <?php if (empty($pics)): ?>
-            <a class="carousel-item" href="#one!"><img src="images/414289-PFPYAR-176.jpg"></a>
+            <a class="carousel-item" href="#"><img src="images/414289-PFPYAR-176.jpg"></a>
           <?php endif; ?>
         </div>
         <br>

@@ -3,16 +3,16 @@
 
 class DbConnection
 {
-    private $dbName = 'realstate';
+    private $dbName = 'findmahy_realstate';
     private $host = 'localhost';
-    private $username = 'admin';
-    private $password = 'admin1234';
+    private $username = 'findmahy_admin';
+    private $password = 'admin@1234';
     private $conn = '';
 
     public function __construct()
     {
         try{
-            $this->conn = new PDO("mysql:host=$this->host;dbname=$this->dbName", $this->username, $this->password);
+            $this->conn = new PDO("mysql:host=$this->host;port=3306;dbname=$this->dbName", $this->username, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn->exec("SET CHARACTER SET utf8");
         }catch (PDOException $e){
