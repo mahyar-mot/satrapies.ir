@@ -24,6 +24,6 @@ async function install() {
 
     });
 
- 
+
   }
 }

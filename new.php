@@ -1,4 +1,8 @@
 <?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header('Location:login.php');
+}
 $missing = [];
 $error = [];
 $name = $tel = $mobile = $zone = $house = $lot = $creation_year = $meter = $unit = $description = $price = $monthly_fee = $address = "";

@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header('Location:login.php');
+}
+print_r($_SESSION);
     require 'DbConnection.php';
     $record = new DbConnection();
 
@@ -43,7 +48,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
     <!--Let browser know website is optimized for mobile-->
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="manifest.json">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>سیستم فایل املاک</title>
 </head>
@@ -140,7 +145,7 @@
     });
 </script>
 <script>
-    if ("serviceWorker" in navigator) {
+if ("serviceWorker" in navigator) {
   if (navigator.serviceWorker.controller) {
     console.log("[PWA Builder] active service worker found, no need to register");
   } else {

@@ -1,4 +1,8 @@
 <?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header('Location:login.php');
+}
     if (array_key_exists('id',$_GET)){
         require 'DbConnection.php';
         $record = new DbConnection();
@@ -87,7 +91,7 @@ function changeToPersian($arr){
                 <li class="collection-item"><div>سال ساخت<span class="left"><?= $result[0]['creation_year'] ?></span></div></li>
                 <li class="collection-item"><div>متراژ<span class="left"><?= $result[0]['meter'] ?></span></div></li>
                 <li class="collection-item"><div>واحد/طبقه<span class="left"><?= $result[0]['unit'] ?></span></div></li>
-                <li class="collection-item"><div>امکانات<span class="left"><?= changeToPersian($result[0]['options']) ?></span></div></li>
+                <li class="collection-item"><div>امکانات<span class="left"><?= changeToPersian($result[0]['options']) ?></span></div><br></li>
                 <li class="collection-item"><div>توضیحات<span class="left"><?= $result[0]['description'] ?></span></div></li>
                 <li class="collection-item"><div>قیمت/ودیعه<span class="left"><?= $result[0]['price'] ?></span></div></li>
                 <li class="collection-item"><div>اجاره ماهیانه<span class="left"><?= $result[0]['monthly_fee'] ?></span></div></li>
