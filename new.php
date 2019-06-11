@@ -11,8 +11,9 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
 
  if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
      $required =['name', 'tel', 'mobile', 'creation_year', 'meter', 'unit', 'price', 'address'];
-     $expected = ['name', 'tel', 'mobile', 'zone', 'house', 'lot', 'creation_year', 'meter', 'unit', 'options', 'description', 'price', 'monthly_fee', 'address'];
+     $expected = ['name', 'tel', 'mobile', 'zone', 'house', 'lot', 'creation_year', 'meter', 'unit', 'options', 'description', 'price', 'monthly_fee', 'address', 'latitude', 'longtitude'];
      require 'validate.php';
+     die($longtitude);
      formValidate($error, $name,'name');
      formValidate($error, $tel,'tel');
      formValidate($error, $mobile,'mobile');
@@ -61,6 +62,7 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
 
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
     <link rel="stylesheet" href="css/style.css">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script type="text/javascript" src="js/materialize.min.js"></script>
@@ -211,6 +213,11 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
                  <span class="helper-text right" data-error="نادرست" data-success="درست"><?php if ($missing && in_array('address', $missing)) echo $empty ?></span>
              </div>
              <br>
+             <div id="map" class="input-field col s12">
+             </div>
+             <input type="hidden" id="latitude" name="latitude" value="35.7192">
+             <input type="hidden" id="longtitude" name="longtitude" value="51.4390">
+             <br>
              <div class="file-field input-field">
                  <div class="btn cyan darken-1">
                      <span>عکس</span>
@@ -231,7 +238,9 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
          </form>
      </div>
 </div>
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
 <script>
+    mapboxgl.accessToken ="pk.eyJ1IjoibWFoeWFyLW1vdCIsImEiOiJjandyemM1b2MwNGJjM3lxb2ppbWdpMncwIn0.2TD2q_k_3QHfa5CAFiDo7g";
     var ele = document.querySelector('#nextpic');
     var subbmit = document.querySelector('#submit');
     ele.addEventListener('click',function (e) {
@@ -248,7 +257,22 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
         "             </div>\n"+
         "<br>";
         submit.insertAdjacentHTML('beforebegin',node);
-    })
+    });
+    var map = new mapboxgl.Map({
+      container: 'map', // HTML container id
+      style: 'mapbox://styles/mapbox/streets-v9', // style URL
+      center: [ 51.4390, 35.7192], // starting position as [lng, lat]
+      zoom: 11.5
+    });
+    var marker = new mapboxgl.Marker({
+        draggable: true
+    }).setLngLat([51.4390, 35.7192]).addTo(map);
+    function onDragEnd() {
+        var lngLat = marker.getLngLat();
+        document.querySelector('#latitude').value = lngLat.lat;
+        document.querySelector('#longtitude').value = lngLat.lng;
+    }
+    marker.on('dragend', onDragEnd);
 </script>
 </body>
 </html>
