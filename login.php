@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
                 if (password_verify($password,$userpass)) {
                     $success = "... ورود با موفقیت انجام شد در حال انتقال به صفحه اصلی ";
                     $_SESSION['username'] = $username;
-                    $_SESSION['id'] = $user[0]['id'];
+                    $_SESSION['userid'] = $user[0]['id'];
                     echo "<script>setTimeout(function(){window.location.replace('index.php')},5000);</script>";
                 }else{
                     $error = "رمز عبور اشتباه است";

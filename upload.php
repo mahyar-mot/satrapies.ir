@@ -2,7 +2,7 @@
 $target_dir = 'uploads/';
 $addressList = [];
 foreach ($_FILES as $key=>$value) {
-    $target_file = $target_dir . basename($value['name']);
+    $target_file = $target_dir . $_SESSION['username']. '_' . basename($value['name']);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 

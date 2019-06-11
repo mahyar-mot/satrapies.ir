@@ -3,7 +3,6 @@ session_start();
 if (!isset($_SESSION['username'])) {
     header('Location:login.php');
 }
-print_r($_SESSION);
     require 'DbConnection.php';
     $record = new DbConnection();
 
@@ -26,9 +25,11 @@ print_r($_SESSION);
             }
         }
         $options =  (is_null($options)) ? null : '%'.changeToEnglish($options).'%';
-        $result = $record ->getRecord('SELECT * FROM houses WHERE (house=:house OR :house IS NULL)AND(lot=:lot OR :lot IS NULL)AND(price=:price OR :price IS NULL)AND(options LIKE :options OR :options IS NULL )', ['house'=>$house, 'lot'=>$lot, 'price'=>$price, 'options'=>$options]);
+        $result = $record ->getRecord('SELECT * FROM houses WHERE (user_id=:user_id)AND(house=:house OR :house IS NULL)AND(lot=:lot OR :lot IS NULL)AND(price=:price OR :price IS NULL)AND(options LIKE :options OR :options IS NULL )', ['user_id'=>$_SESSION['userid'], 'house'=>$house, 'lot'=>$lot, 'price'=>$price, 'options'=>$options]);
+        $pic = $record->getRecord("SELECT url, house_id FROM pics GROUP BY house_id");
+        $col = array_column($pic, 'house_id');
     }else{
-        $result = $record ->getRecord('SELECT * FROM houses ORDER BY created_at DESC');
+        $result = $record ->getRecord('SELECT * FROM houses WHERE user_id=? ORDER BY created_at DESC',[$_SESSION['userid']]);
         $pic = $record->getRecord("SELECT url, house_id FROM pics GROUP BY house_id");
         $col = array_column($pic, 'house_id');
     }

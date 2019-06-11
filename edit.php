@@ -40,7 +40,9 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
 
         if (array_key_exists('deletepic', $_POST)){
             foreach ($_POST['deletepic'] as $k => $v){
-                $record ->insertRecord("DELETE FROM pics WHERE id=? AND house_id=?", [$v, $id]);
+                $pic_info = preg_split('/@uRl/',$v);
+                unlink($pic_info[1]);
+                $record ->insertRecord("DELETE FROM pics WHERE id=? AND house_id=?", [$pic_info[0], $id]);
             }
         }
         if ($_FILES['image']['name'] != ''){
@@ -246,7 +248,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
                 <?php if (!empty($pics)) : ?>
                 <h6>حذف تصاویر:</h6>
                     <?php foreach ($pics as $key=>$value):?>
-                        <input type="checkbox" class="browser-default" id="<?= 'id_'.$value['id']?>" name="deletepic[]" value="<?= $value['id']?>" >
+                        <input type="checkbox" class="browser-default" id="<?= 'id_'.$value['id']?>" name="deletepic[]" value="<?= $value['id'].'@uRl'.$value['url']?>" >
                         <label class="browser-default" for="<?= 'id_'.$value['id']?>"> <img src="<?= $value['url'] ?>" width="250"></label>
                     <?php endforeach;?>
                 <?php endif; ?>
