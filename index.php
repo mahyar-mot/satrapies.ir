@@ -81,6 +81,8 @@ if (!isset($_SESSION['username'])) {
                 <div  class="background">
                     <img src="images/logo.png">
                 </div>
+                <span class="white-text"> خوش آمدید : <?= $_SESSION['username']?></span>
+            
             </div>
         </li>
         <br>
