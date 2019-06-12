@@ -33,6 +33,7 @@ function changeToPersian($arr){
     <!--Import materialize.css-->
     <link rel="stylesheet" href="css/style.css">
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>سیستم فایل املاک</title>
@@ -98,14 +99,29 @@ function changeToPersian($arr){
                 <li class="collection-item"><div> آدرس<span class="left"><?= $result[0]['address'] ?></span></div></li>
             </ul>
         </div>
+        <br>
+        <div class="col s12" id="map">
+        </div>
     </div>
 </div>
 <!--JavaScript at end of body for optimized loading-->
 <script type="text/javascript" src="js/materialize.min.js"></script>
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.carousel');
         var instances = M.Carousel.init(elems, {fullWidth:true});
-    });</script>
+    });
+    mapboxgl.accessToken ="pk.eyJ1IjoibWFoeWFyLW1vdCIsImEiOiJjandyemM1b2MwNGJjM3lxb2ppbWdpMncwIn0.2TD2q_k_3QHfa5CAFiDo7g";
+    var map = new mapboxgl.Map({
+      container: 'map', // HTML container id
+      style: 'mapbox://styles/mapbox/streets-v9', // style URL
+      center: [ <?= $result[0]['longtitude'] ?>, <?= $result[0]['latitude'] ?>], // starting position as [lng, lat]
+      zoom: 13
+    });
+    var marker = new mapboxgl.Marker({
+        draggable: false
+    }).setLngLat([<?= $result[0]['longtitude'] ?>, <?= $result[0]['latitude'] ?>]).addTo(map);
+</script>
 </body>
 </html>

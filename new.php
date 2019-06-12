@@ -13,7 +13,6 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
      $required =['name', 'tel', 'mobile', 'creation_year', 'meter', 'unit', 'price', 'address'];
      $expected = ['name', 'tel', 'mobile', 'zone', 'house', 'lot', 'creation_year', 'meter', 'unit', 'options', 'description', 'price', 'monthly_fee', 'address', 'latitude', 'longtitude'];
      require 'validate.php';
-     die($longtitude);
      formValidate($error, $name,'name');
      formValidate($error, $tel,'tel');
      formValidate($error, $mobile,'mobile');
@@ -33,11 +32,11 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
 
      if (!($error || $missing)){
          $result = ['owner'=>$name, 'tel'=>$tel, 'mobile'=>$mobile, 'zone'=>$zone, 'house'=>$house, 'lot'=>$lot, 'creation_year'=>$creation_year,
-             'meter'=>$meter, 'unit'=>$unit, 'options'=>implode(',',$options), 'description'=>$description, 'price'=>$price, 'monthly_fee'=>$monthly_fee, 'address'=>$address,'user_id'=>$_SESSION['userid']];
+             'meter'=>$meter, 'unit'=>$unit, 'options'=>implode(',',$options), 'description'=>$description, 'price'=>$price, 'monthly_fee'=>$monthly_fee, 'address'=>$address, 'latitude'=>$latitude, 'longtitude'=>$longtitude, 'user_id'=>$_SESSION['userid']];
          require 'DbConnection.php';
          $record = new DbConnection();
-         $row = $record->insertRecord("INSERT INTO houses (owner ,tel ,mobile , zone, house, lot, creation_year, meter, unit, options, description, price, monthly_fee, address, user_id)
-                            VALUES (:owner, :tel, :mobile, :zone, :house, :lot, :creation_year, :meter, :unit, :options, :description, :price, :monthly_fee, :address, :user_id)", $result);
+         $row = $record->insertRecord("INSERT INTO houses (owner ,tel ,mobile , zone, house, lot, creation_year, meter, unit, options, description, price, monthly_fee, address, latitude, longtitude, user_id)
+                            VALUES (:owner, :tel, :mobile, :zone, :house, :lot, :creation_year, :meter, :unit, :options, :description, :price, :monthly_fee, :address, :latitude, :longtitude, :user_id)", $result);
 
          if (is_string($row)){
              require 'upload.php';

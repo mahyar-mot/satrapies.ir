@@ -11,7 +11,7 @@ $empty = '<span class="red-text">نباید خالی باشد</span>';
 
 if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
     $required =['name', 'tel', 'mobile', 'creation_year', 'meter', 'unit', 'price', 'address'];
-    $expected = ['id','name', 'tel', 'mobile', 'zone', 'house', 'lot', 'creation_year', 'meter', 'unit', 'options', 'description', 'price', 'monthly_fee', 'address'];
+    $expected = ['id','name', 'tel', 'mobile', 'zone', 'house', 'lot', 'creation_year', 'meter', 'unit', 'options', 'description', 'price', 'monthly_fee', 'address', 'latitude', 'longtitude'];
     require 'validate.php';
     formValidate($error, $name,'name');
     formValidate($error, $tel,'tel');
@@ -32,11 +32,11 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
 
     if (!($error || $missing)){
         $result = ['owner'=>$name, 'tel'=>$tel, 'mobile'=>$mobile, 'zone'=>$zone, 'house'=>$house, 'lot'=>$lot, 'creation_year'=>$creation_year,
-            'meter'=>$meter, 'unit'=>$unit, 'options'=>implode(',',$options), 'description'=>$description, 'price'=>$price, 'monthly_fee'=>$monthly_fee, 'address'=>$address, 'id'=>$id];
+            'meter'=>$meter, 'unit'=>$unit, 'options'=>implode(',',$options), 'description'=>$description, 'price'=>$price, 'monthly_fee'=>$monthly_fee, 'address'=>$address, 'latitude'=>$latitude, 'longtitude'=>$longtitude, 'id'=>$id];
         require 'DbConnection.php';
         $record = new DbConnection();
         $row = $record->insertRecord("UPDATE houses SET owner=:owner ,tel=:tel ,mobile=:mobile , zone=:zone ,house=:house, lot=:lot, creation_year=:creation_year,
-            meter=:meter, unit=:unit, options=:options, description=:description, price=:price, monthly_fee=:monthly_fee, address=:address WHERE id=:id", $result);
+            meter=:meter, unit=:unit, options=:options, description=:description, price=:price, monthly_fee=:monthly_fee, address=:address, latitude=:latitude, longtitude=:longtitude WHERE id=:id", $result);
 
         if (array_key_exists('deletepic', $_POST)){
             foreach ($_POST['deletepic'] as $k => $v){
@@ -77,6 +77,8 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
     $price = $ro[0]['price'];
     $monthly_fee = $ro[0]['monthly_fee'];
     $address = $ro[0]["address"];
+    $latitude = $ro[0]['latitude'];
+    $longtitude = $ro[0]['longtitude'];
 }else{
     header('Location:index.php');
 }
@@ -93,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
 
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
     <link rel="stylesheet" href="css/style.css">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script type="text/javascript" src="js/materialize.min.js"></script>
@@ -244,6 +247,11 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
                 <span class="helper-text right" data-error="نادرست" data-success="درست"><?php if ($missing && in_array('address', $missing)) echo $empty ?></span>
             </div>
             <br>
+            <div id="map" class="input-field col s12">
+            </div>
+            <input type="hidden" id="latitude" name="latitude" value="<?= $latitude ?>">
+            <input type="hidden" id="longtitude" name="longtitude" value="<?= $longtitude ?>">
+            <br>
             <div id="deletepics" class="col s12">
                 <?php if (!empty($pics)) : ?>
                 <h6>حذف تصاویر:</h6>
@@ -273,7 +281,9 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
         </form>
     </div>
 </div>
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
 <script>
+    mapboxgl.accessToken ="pk.eyJ1IjoibWFoeWFyLW1vdCIsImEiOiJjandyemM1b2MwNGJjM3lxb2ppbWdpMncwIn0.2TD2q_k_3QHfa5CAFiDo7g";
     var ele = document.querySelector('#nextpic');
     var subbmit = document.querySelector('#submit');
     ele.addEventListener('click',function (e) {
@@ -290,7 +300,22 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submit'])){
             "             </div>\n"+
             "<br>";
         submit.insertAdjacentHTML('beforebegin',node);
-    })
+    });
+    var map = new mapboxgl.Map({
+      container: 'map', // HTML container id
+      style: 'mapbox://styles/mapbox/streets-v9', // style URL
+      center: [ <?= $longtitude.', '.$latitude ?>], // starting position as [lng, lat]
+      zoom: 12.5
+    });
+    var marker = new mapboxgl.Marker({
+        draggable: true
+    }).setLngLat([<?= $longtitude.', '.$latitude ?>]).addTo(map);
+    function onDragEnd() {
+        var lngLat = marker.getLngLat();
+        document.querySelector('#latitude').value = lngLat.lat;
+        document.querySelector('#longtitude').value = lngLat.lng;
+    }
+    marker.on('dragend', onDragEnd);
 </script>
 </body>
 </html>
